@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% if ticker %}
+    {{ ticker }}
+
+{% endif %}
+
+<!-- Loop through api items to display relevant data-->
+
+{% if api_load %}
+    {% if api_load == 'There is an error in your request. Please try again!' %}
+        There is an error in your request. Please try again!
+    {% else %}
+        <div class="d-flex flex-row">
+        <div>
+        <h1>{{ api_load.companyName }}</h1><br/>
+        <b>Ticker:</b> {{ api_load.symbol }}<br/>
+        <b>Exchange:</b> {{ api_load.primaryExchange }}<br/>
+        <b>Open Price:</b> ${{ api_load.open }}<br/>
+        <b>Close Price:</b> ${{ api_load.close }}<br/>
+        <b>Real-time Price:</b> {{ api_load.iexRealtimePrice }}<br/>
+        <b>Date:</b> {{ api_load.latestTime }}<br/>
+        <b>52-week High:</b> ${{ api_load.week52High }}<br/>
+        <b>52-week Low:</b> ${{ api_load.week52Low }}<br/><br/>
+        </div>
+        <div intrinio-widget-type="full_stock_chart" intrinio-widget-ticker={{ api_load.symbol }}></div>
+        </div>
+
+
+    {% endif %}
+{% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h4>Please Enter Your Ticker Below</h4>
+<br/>
+<form action="{% url 'analysis' %}" class="form-inline my-2 my-lg-0" method="POST">
+        {% csrf_token %}
+      <input class="form-control mr-sm-2" type="Ticker Search" placeholder="Enter Your Ticker" aria-label="Ticker Search" name="ticker">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Ticker Search</button>
+    </form><br/><br/>
+
+<div>
+    {% if b64_image %}
+        <img src="{{ b64_image }}" alt="Image" />
+    {% endif %}
+</div>
+
+
+</body>
+</html>
+
+
+{% endblock %}

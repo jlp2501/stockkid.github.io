@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<br/>
+<h4>Please Enter Your Ticker Below</h4><br/>
+<form action="{% url 'portfolio' %}" class="form-inline my-2 my-lg-0" method="POST">
+        {% csrf_token %}
+      <input class="form-control mr-sm-2" type="Ticker Search" placeholder="Enter Your Ticker" aria-label="Ticker Search" name="ticker">
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Ticker Search</button>
+    </form><br/><br/>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Company Name</th>
+      <th scope="col">Exchange</th>
+      <th scope="col">Open Price</th>
+        <th scope="col">Close Price</th>
+        <th scope="col">Real-time Price</th>
+        <th scope="col">Date</th>
+        <th scope="col">Market Cap</th>
+        <th scope="col">52-week High</th>
+        <th scope="col">52-week Low</th>
+
+    </tr>
+  </thead>
+    <tbody>
+    {% if ticker %}
+    <!--Loop through json response to get populate data to table-->
+                {% for item in output %}
+                    <tr>
+                        <th scope="row">{{ item.companyName }}</th>
+                        <td>{{ item.primaryExchange }}</td>
+                        <td>${{ item.open }}</td>
+                        <td>${{ item.close }}</td>
+                        <td><span intrinio-widget-type="ticker_summary" intrinio-widget-ticker="{{ item.symbol }}"></span></td>
+                        <td>{{ item.latestTime }}</td>
+                        <td>${{ item.marketCap }}</td>
+                        <td>${{ item.week52High }}</td>
+                        <td>${{ item.week52Low }}</td>
+
+                    <tr/>
+                {% endfor %}
+    {% endif %}
+
+    </tbody>
+</table>
+<br/>
+<h5>Remove Ticker From Portfolio</h5>
+{% for item in ticker %}
+    <a href="{% url 'delete' item.id %}" class="btn btn-secondary">Delete {{ item.ticker }}</a>
+{% endfor %}
+
+<br/>
+<br/>
+<br/>
+
+{% endblock %}
