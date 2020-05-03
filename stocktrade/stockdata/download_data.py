@@ -15,7 +15,6 @@ def download_data(ticker, **kwargs):
     :return: dataframe
     """
     enter_ticker = "WIKI/" + ticker
-    quandl.ApiConfig.api_key = "WmTEx2dyXqQ-Xd9iShT7"
     ticker_data_df = quandl.get(enter_ticker, start_date='2000-01-01', end_date='2018-01-01')
     ticker_data_df_adj_clo = ticker_data_df[['Adj. Close']]
     ticker_data_df_adj_clo = ticker_data_df_adj_clo.dropna(0)
